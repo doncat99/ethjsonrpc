@@ -17,9 +17,9 @@ def clean_hex(d):
 
 def validate_block(block):
     try:
-        isString = isinstance(block, basestring):
+        isString = isinstance(block, basestring)
     except:
-        isString = isinstance(block, str):
+        isString = isinstance(block, str)
     if isString:
         if block not in BLOCK_TAGS:
             raise ValueError('invalid block tag')
