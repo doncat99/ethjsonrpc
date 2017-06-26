@@ -97,7 +97,10 @@ class EthJsonRpc(object):
         if sig is not None and args is not None:
              types = sig[sig.find('(') + 1: sig.find(')')].split(',')
              encoded_params = encode_abi(types, args)
-             code += encoded_params.encode('hex')
+             try:
+                 code += encoded_params.encode('hex')
+             except:
+                 code += encoded_params.hex()
         return self.eth_sendTransaction(from_address=from_, gas=gas, data=code)
 
     def get_contract_address(self, tx):
@@ -113,9 +116,18 @@ class EthJsonRpc(object):
         transaction (useful for reading data)
         '''
         data = self._encode_function(sig, args)
-        data_hex = data.encode('hex')
+        try:
+            data_hex = data.encode('hex')
+        except:
+            data_hex = data.hex()
         response = self.eth_call(to_address=address, data=data_hex)
-        return decode_abi(result_types, response[2:].decode('hex'))
+        
+        try:
+            result = decode_abi(result_types, response[2:].decode('hex'))
+        except:
+            result = decode_abi(result_types, bytes.fromhex(response[2:]))
+
+        return result
 
     def call_with_transaction(self, from_, address, sig, args, gas=None, gas_price=None, value=None):
         '''
