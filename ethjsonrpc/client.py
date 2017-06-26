@@ -128,7 +128,7 @@ class EthJsonRpc(object):
         try:
             data_hex = data.encode('hex')
         except:
-            data_hex = data
+            data_hex = data.hex()
         return self.eth_sendTransaction(from_address=from_, to_address=address, data=data_hex, gas=gas,
                                         gas_price=gas_price, value=value)
 

@@ -5,7 +5,7 @@ except ImportError:
 
 setup(
     name='ethjsonrpc',
-    version='0.3.2',
+    version='0.3.3',
     description='Ethereum JSON-RPC client',
     long_description=open('README.rst').read(),
     author='ConsenSys',
